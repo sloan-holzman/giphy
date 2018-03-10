@@ -17,7 +17,7 @@ class Navbar extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Toolbar>
           <ToolbarGroup firstChild={true}>
-            <AutoCompleteFilters/>
+            <AutoCompleteFilters getSearchResults={this.props.getSearchResults}/>
           </ToolbarGroup>
           <ToolbarGroup>
             <ToolbarTitle text="Giphy Search!" />

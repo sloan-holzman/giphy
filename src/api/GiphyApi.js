@@ -12,12 +12,6 @@ class GiphyApi {
         q: q
       }
     })
-    .then(response => {
-      console.log(response)
-    })
-    .catch(err => {
-      console.log(err)
-    })
   }
 }
 
