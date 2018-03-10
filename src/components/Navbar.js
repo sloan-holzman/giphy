@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import muiTheme from './muiTheme'
@@ -9,64 +9,37 @@ import IconButton from 'material-ui/IconButton';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import MenuItem from 'material-ui/MenuItem';
 
-class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      width: window.innerWidth
-    };
-    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
-  }
-
-  componentWillMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  handleWindowSizeChange = () => {
-    this.setState({
-      width: window.innerWidth
-    });
-  };
-
-  render() {
-    const { width } = this.state;
-    const isMobile = width <= 750
-    return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <Toolbar>
-          <ToolbarGroup firstChild={true}>
-            <AutoCompleteFilters getSearchResults={this.props.getSearchResults}/>
-          </ToolbarGroup>
-          <ToolbarGroup>
-            <ToolbarTitle text="Giphy Search!" />
-            <ToolbarSeparator />
-            {isMobile ?
-              <IconMenu
-                iconButtonElement={
-                  <IconButton touch={true}>
-                    <NavigationExpandMoreIcon />
-                  </IconButton>
-                }
-              >
-                <MenuItem primaryText="Trending" />
-                <MenuItem primaryText="Random" />
-              </IconMenu> :
-              <div>
-                <RaisedButton label="Trending" primary={true} />
-                <RaisedButton label="Random" primary={true} />
-              </div>
-            }
-              </ToolbarGroup>
-        </Toolbar>
-      </MuiThemeProvider>
-    )
-  }
+const Navbar = ({...props}) => {
+  let isMobile = props.width <= 750
+  return (
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <Toolbar>
+        <ToolbarGroup firstChild={true}>
+          <AutoCompleteFilters fetchSearchResults={props.fetchSearchResults}/>
+        </ToolbarGroup>
+        <ToolbarGroup>
+          {!isMobile && <ToolbarTitle text="Giphy Search!" />}
+          <ToolbarSeparator />
+          {isMobile ?
+            <IconMenu
+              iconButtonElement={
+                <IconButton touch={true}>
+                  <NavigationExpandMoreIcon />
+                </IconButton>
+              }
+            >
+              <MenuItem primaryText="Trending" onClick={props.fetchTrendingResults}/>
+              <MenuItem primaryText="Random" onClick={props.fetchRandomResult}/>
+            </IconMenu> :
+            <div>
+              <RaisedButton label="Trending" primary={true} onClick={props.fetchTrendingResults}/>
+              <RaisedButton label="Random" primary={true} onClick={props.fetchRandomResult}/>
+            </div>
+          }
+        </ToolbarGroup>
+      </Toolbar>
+    </MuiThemeProvider>
+  )
 }
-
-
 
 export default Navbar

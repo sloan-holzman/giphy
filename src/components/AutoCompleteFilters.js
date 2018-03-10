@@ -33,7 +33,7 @@ export default class AutoCompleteControlled extends Component {
       })
       localStorage.searches = JSON.stringify(this.state.recentSearches)
     }
-    this.props.getSearchResults(this.state.searchText)
+    this.props.fetchSearchResults(this.state.searchText)
   };
 
   render() {

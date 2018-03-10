@@ -13,3 +13,14 @@ body {
 .center {
   text-align: center;
 }
+
+.search-results__explanation button {
+  border: 0;
+  color: #26a69a;
+  font-weight: normal;
+  background-color: white;
+}
+
+.italic {
+  font-style: italic;
+}

@@ -9,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      width: window.innerWidth,
       searchText: '',
       searched: false,
       searching: false,
@@ -18,17 +19,20 @@ class App extends Component {
         rating: 'pg'
       }
     };
-    this.getSearchResults = this.getSearchResults.bind(this);
+    this.fetchSearchResults = this.fetchSearchResults.bind(this);
+    this.fetchTrendingResults = this.fetchTrendingResults.bind(this);
+    this.fetchRandomResult = this.fetchRandomResult.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
+    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
   }
 
-  getSearchResults(searchText){
+  fetchSearchResults(searchText){
     this.setState({
       searching: true,
       searchText: searchText
     })
     let joinedSearchText = searchText.split(" ").join("+")
-    GiphyApi.getSearchResults(this.state.settings.limit, this.state.rating, joinedSearchText)
+    GiphyApi.fetchSearchResults(this.state.settings.limit, this.state.rating, joinedSearchText)
     .then(response => {
       if (response.status === 200) {
         console.log("success")
@@ -36,6 +40,48 @@ class App extends Component {
           searched: true,
           searching: false,
           results: response.data.data
+        })
+      }
+      console.log(this.state.results)
+    })
+    .catch(err => console.log(err))
+  }
+
+  fetchTrendingResults(){
+    this.setState({
+      searching: true,
+      searchText: "trending"
+    })
+    GiphyApi.fetchTrendingResults(this.state.settings.limit, this.state.rating)
+    .then(response => {
+      if (response.status === 200) {
+        console.log("success")
+        this.setState({
+          searched: true,
+          searching: false,
+          results: response.data.data
+        })
+      }
+      console.log(this.state.results)
+    })
+    .catch(err => console.log(err))
+  }
+
+  fetchRandomResult(){
+    console.log("random!")
+    this.setState({
+      searching: true,
+      searchText: "random"
+    })
+    GiphyApi.fetchRandomResult(this.state.rating)
+    .then(response => {
+      if (response.status === 200) {
+        console.log("success")
+        console.log(response)
+        this.setState({
+          searched: true,
+          searching: false,
+          results: [response.data.data]
         })
       }
       console.log(this.state.results)
@@ -52,13 +98,33 @@ class App extends Component {
     })
   }
 
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({
+      width: window.innerWidth
+    });
+    console.log(this.state.width)
+  };
+
   render() {
     let searched = this.state.searched ? "true" : "false"
     let searching = this.state.searching ? "true" : "false"
     let results = this.state.results.length
     return (
       <div className="App">
-        <Navbar getSearchResults={this.getSearchResults}/>
+        <Navbar
+          fetchSearchResults={this.fetchSearchResults}
+          width={this.state.width}
+          fetchTrendingResults={this.fetchTrendingResults}
+          fetchRandomResult={this.fetchRandomResult}
+        />
         <div>
           <p>Searched: {searched}</p>
           <p>Searching: {searching}</p>
@@ -67,8 +133,8 @@ class App extends Component {
           {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
           {this.state.searched &&
             <div className="center">
-              <p>Search results for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></p>
-              <p>(Results: {results})</p>
+              <p className="search-results__explanation">Search results for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></p>
+              <p className="italic">Results: {results}</p>
             </div>}
           {this.state.searched && <Grid results={this.state.results}/>}
         </section>
