@@ -3,6 +3,7 @@ import '../stylesheets/App.css';
 import Navbar from '../components/Navbar'
 import Grid from '../components/Grid'
 import GiphyApi from "../api/GiphyApi"
+import CircularProgressGraphic from '../components/CircularProgressGraphic'
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends Component {
       }
     };
     this.getSearchResults = this.getSearchResults.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
   }
 
   getSearchResults(searchText){
@@ -41,6 +43,15 @@ class App extends Component {
     .catch(err => console.log(err))
   }
 
+  clearSearch(e){
+    e.preventDefault();
+    this.setState({
+      searchText: '',
+      searched: false,
+      results: []
+    })
+  }
+
   render() {
     let searched = this.state.searched ? "true" : "false"
     let searching = this.state.searching ? "true" : "false"
@@ -51,10 +62,14 @@ class App extends Component {
         <div>
           <p>Searched: {searched}</p>
           <p>Searching: {searching}</p>
-          <p>Results: {results}</p>
         </div>
         <section className="results">
-          {this.state.searched && <p>Search results for '{this.state.searchText}'</p>}
+          {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
+          {this.state.searched &&
+            <div className="center">
+              <p>Search results for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></p>
+              <p>(Results: {results})</p>
+            </div>}
           {this.state.searched && <Grid results={this.state.results}/>}
         </section>
       </div>

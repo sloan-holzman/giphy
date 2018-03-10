@@ -9,3 +9,7 @@ body {
   align-items: center;
   align-content: center;
 }
+
+.center {
+  text-align: center;
+}
