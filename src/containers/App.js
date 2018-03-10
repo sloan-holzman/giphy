@@ -133,10 +133,10 @@ class App extends Component {
           {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
           {this.state.searched &&
             <div className="center">
-              <p className="search-results__explanation">Search results for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></p>
-              <p className="italic">Results: {results}</p>
+              <p className="search-results__explanation">Search results ({results}) for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></p>
+              <p className="italic">Click on any GIF for full size and details</p>
             </div>}
-          {this.state.searched && <Grid results={this.state.results}/>}
+          {this.state.searched && <Grid results={this.state.results} reverseModal={this.reverseModal} modalOpen={this.state.modalOpen}/>}
         </section>
       </div>
     );
