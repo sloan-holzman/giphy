@@ -1,7 +1,6 @@
 import React from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import muiTheme from './muiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -12,6 +11,7 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    width: '95%'
   },
   gridList: {
     width: '100%',
@@ -24,9 +24,9 @@ const Grid = ({...props}) => (
   <div style={styles.root}>
     <MuiThemeProvider muiTheme={muiTheme}>
       <GridList
-        // cellHeight={180}
+        cellHeight={"auto"}
         style={styles.gridList}
-        cols={10}
+        cols={5}
       >
         {props.results.map((tile) => (
           <GridTile
@@ -35,7 +35,7 @@ const Grid = ({...props}) => (
             // subtitle={<span>by <b>{tile.author}</b></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
           >
-            <img src={tile.images.original.url} />
+            <img src={tile.images.original.url} alt={tile.title}/>
           </GridTile>
         ))}
       </GridList>

@@ -18,8 +18,9 @@ export default class AutoCompleteControlled extends Component {
   }
 
   handleUpdateInput = (searchText) => {
+    let lowerCaseSearchText = searchText.toLowerCase();
     this.setState({
-      searchText: searchText,
+      searchText: lowerCaseSearchText,
     });
   };
 

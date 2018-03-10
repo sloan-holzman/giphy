@@ -53,8 +53,10 @@ class App extends Component {
           <p>Searching: {searching}</p>
           <p>Results: {results}</p>
         </div>
-        {this.state.searched && <p>Search results for '{this.state.searchText}'</p>}
-        {this.state.searched && <Grid results={this.state.results}/>}
+        <section className="results">
+          {this.state.searched && <p>Search results for '{this.state.searchText}'</p>}
+          {this.state.searched && <Grid results={this.state.results}/>}
+        </section>
       </div>
     );
   }
