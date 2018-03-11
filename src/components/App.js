@@ -131,10 +131,9 @@ class App extends Component {
           />
         </header>
         <main>
-          {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
           {!this.state.searched && <h1>Giphy Search!</h1>}
           {!this.state.searched && <h2>By Sloan Holzman</h2>}
-          {/* {!this.state.searched && <h2>Search for your favorite GIFs...</h2>} */}
+          {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
           {this.state.searched &&
             <div>
               <h3 className="search-results__explanation">Search results ({results}) for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></h3>

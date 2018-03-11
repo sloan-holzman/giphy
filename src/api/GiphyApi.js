@@ -4,7 +4,7 @@ class GiphyApi {
   static fetchSearchResults(limit, rating, q) {
      return axios({
      method: "GET",
-     url: `http://api.giphy.com/v1/gifs/search`,
+     url: `https://api.giphy.com/v1/gifs/search`,
       params: {
         api_key: 'FfJGay2ccKpR7Sb0uftPnrsmeBhFVInR',
         limit: limit,
@@ -17,7 +17,7 @@ class GiphyApi {
   static fetchTrendingResults(limit, rating) {
      return axios({
      method: "GET",
-     url: `http://api.giphy.com/v1/gifs/trending`,
+     url: `https://api.giphy.com/v1/gifs/trending`,
       params: {
         api_key: 'FfJGay2ccKpR7Sb0uftPnrsmeBhFVInR',
         limit: limit,
@@ -29,7 +29,7 @@ class GiphyApi {
   static fetchRandomResult(rating) {
      return axios({
      method: "GET",
-     url: `http://api.giphy.com/v1/gifs/random`,
+     url: `https://api.giphy.com/v1/gifs/random`,
       params: {
         api_key: 'FfJGay2ccKpR7Sb0uftPnrsmeBhFVInR',
         rating: rating
