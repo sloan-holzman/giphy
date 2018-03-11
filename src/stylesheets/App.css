@@ -1,7 +1,6 @@
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
-  text-align: center;
 }
 
 .results {
@@ -9,6 +8,7 @@ body {
   flex-direction: column;
   align-items: center;
   align-content: center;
+  text-align: center;
 }
 
 .center {

@@ -136,8 +136,8 @@ class App extends Component {
           fetchTrendingResults={this.fetchTrendingResults}
           fetchRandomResult={this.fetchRandomResult}
         />
-        <h1>Giphy Search!</h1>
         <section className="results">
+          <h1>Giphy Search!</h1>
           {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
           {!this.state.searched && <p>Search for your favorite GIFs...</p>}
           {this.state.searched &&
