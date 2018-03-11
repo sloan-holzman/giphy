@@ -1,6 +1,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
+  text-align: center;
 }
 
 .results {
@@ -19,8 +20,32 @@ body {
   color: #26a69a;
   font-weight: normal;
   background-color: white;
+  font-size: 14px;
 }
 
 .italic {
   font-style: italic;
+}
+
+.limit-buttons button {
+  color: #26a69a;
+  border: 0;
+  background-color: white;
+}
+
+.limit-buttons button:nth-child(2) {
+    color: #00009F;
+}
+
+.padding-left {
+  padding-left: 2vw;
+}
+
+.link {
+  letter-spacing: 0px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  color: #26a69a;
+  text-decoration: none;
 }

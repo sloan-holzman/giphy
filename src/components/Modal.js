@@ -21,13 +21,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <Dialog
-            title="Dialog With Actions"
+            title={this.props.gif.title}
             actions={actions}
             modal={true}
             open={this.props.modalOpen}
           >
-            Only actions can close this dialog.
             {this.props.gif.images && <img src={this.props.gif.images.original.url} alt={this.props.gif.title}/>}
+            <br/>
+            <a className="link" href={this.props.gif.url} target="_blank">LINK</a>
           </Dialog>
         </MuiThemeProvider>
       </div>

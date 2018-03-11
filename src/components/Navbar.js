@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AutoCompleteFilters from './AutoCompleteFilters'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
 
 const Navbar = ({...props}) => {
@@ -14,17 +14,17 @@ const Navbar = ({...props}) => {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
       <Toolbar>
-        <ToolbarGroup firstChild={true}>
-          <AutoCompleteFilters fetchSearchResults={props.fetchSearchResults}/>
+        <ToolbarGroup firstChild={true} className="padding-left">
+          <AutoCompleteFilters fetchSearchResults={props.fetchSearchResults} />
         </ToolbarGroup>
         <ToolbarGroup>
-          {!isMobile && <ToolbarTitle text="Giphy Search!" />}
+          {/* {!isMobile && <ToolbarTitle text="Giphy Search!" />} */}
           <ToolbarSeparator />
           {isMobile ?
             <IconMenu
               iconButtonElement={
                 <IconButton touch={true}>
-                  <NavigationExpandMoreIcon />
+                  <MoreVertIcon />
                 </IconButton>
               }
             >

@@ -47,6 +47,7 @@ export default class AutoCompleteControlled extends Component {
           dataSource={this.state.recentSearches}
           filter={AutoComplete.fuzzyFilter}
           openOnFocus={true}
+          maxSearchResults={10}
         />
       </div>
     );

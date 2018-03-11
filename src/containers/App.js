@@ -24,6 +24,19 @@ class App extends Component {
     this.fetchRandomResult = this.fetchRandomResult.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
+    this.changeLimit = this.changeLimit.bind(this);
+  }
+
+  changeLimit(newLimit){
+    let settingsCopy = this.state.settings
+    settingsCopy.limit = newLimit
+    this.setState({
+      settings: settingsCopy
+    })
+    console.log(this.state.settings)
+    if (this.state.searched) {
+      this.fetchSearchResults(this.state.searchText)
+    }
   }
 
   fetchSearchResults(searchText){
@@ -114,8 +127,6 @@ class App extends Component {
   };
 
   render() {
-    let searched = this.state.searched ? "true" : "false"
-    let searching = this.state.searching ? "true" : "false"
     let results = this.state.results.length
     return (
       <div className="App">
@@ -125,20 +136,19 @@ class App extends Component {
           fetchTrendingResults={this.fetchTrendingResults}
           fetchRandomResult={this.fetchRandomResult}
         />
-        <div>
-          <p>Searched: {searched}</p>
-          <p>Searching: {searching}</p>
-        </div>
+        <h1>Giphy Search!</h1>
         <section className="results">
           {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
+          {!this.state.searched && <p>Search for your favorite GIFs...</p>}
           {this.state.searched &&
             <div className="center">
               <p className="search-results__explanation">Search results ({results}) for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></p>
               <p className="italic">Click on any GIF for full size and details</p>
             </div>}
-          {this.state.searched && <Grid results={this.state.results} reverseModal={this.reverseModal} modalOpen={this.state.modalOpen}/>}
-        </section>
-      </div>
+          {this.state.searched && <Grid width={this.state.width} results={this.state.results} reverseModal={this.reverseModal} modalOpen={this.state.modalOpen}/>}
+          <p className="limit-buttons">Results per search: <button onClick={() => this.changeLimit(5)}>5</button> / <button onClick={() => this.changeLimit(10)}>10</button> / <button onClick={() => this.changeLimit(25)}>25</button> / <button onClick={() => this.changeLimit(50)}>50</button></p>
+          </section>
+        </div>
     );
   }
 }
