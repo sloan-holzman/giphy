@@ -22,7 +22,7 @@ class Grid extends Component {
   };
 
   render() {
-    let columns = Math.round(this.props.width / 200)
+    let columns = Math.min(Math.round(this.props.width / 200),this.props.results.length)
     return (
       <div className="gridListSection">
         <MuiThemeProvider muiTheme={muiTheme}>
