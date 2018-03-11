@@ -1,19 +1,99 @@
-body {
+/* Site structure */
+
+html, body, #root, .App {
+  height: 100%;
   font-family: 'Roboto', sans-serif;
   margin: 0;
+  text-align: center;
 }
 
-.results {
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  flex: 0 0 auto;
+  padding: 0 15%;
+  background-color: #E5E5E5;
+}
+
+main {
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: center;
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: scroll;
   text-align: center;
 }
 
-.center {
-  text-align: center;
+/* grid styling */
+
+.gridListSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 95%;
 }
+
+.gridList {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* basic styling */
+
+::-webkit-scrollbar {
+  width: 0px; /* remove scrollbar space, if we want to do that */
+  background: transparent; /* make scrollbar invisible */
+}
+
+.italic {
+  font-style: italic;
+}
+
+.padding-left {
+  padding-left: 2vw;
+}
+
+/* font sizes */
+
+h1 {
+  font-size: calc(12px + 4vw + 4vh)
+}
+
+/* results per page button styling */
+
+.limit-buttons button {
+  color: black;
+  border: 0;
+  background-color: white;
+}
+
+._5 button:nth-child(1) {
+  font-weight: bold;
+  color: #26a69a;
+}
+
+._10 button:nth-child(2) {
+  font-weight: bold;
+  color: #26a69a;
+}
+
+._25 button:nth-child(3) {
+  font-weight: bold;
+  color: #26a69a;
+}
+
+._50 button:nth-child(4) {
+  font-weight: bold;
+  color: #26a69a;
+}
+
+/* misc elements */
 
 .search-results__explanation button {
   border: 0;
@@ -23,24 +103,6 @@ body {
   font-size: 14px;
 }
 
-.italic {
-  font-style: italic;
-}
-
-.limit-buttons button {
-  color: #26a69a;
-  border: 0;
-  background-color: white;
-}
-
-.limit-buttons button:nth-child(2) {
-    color: #00009F;
-}
-
-.padding-left {
-  padding-left: 2vw;
-}
-
 .link {
   letter-spacing: 0px;
   text-transform: uppercase;
@@ -48,4 +110,24 @@ body {
   font-size: 14px;
   color: #26a69a;
   text-decoration: none;
+}
+
+.credits, .credits a {
+  font-size: 2px;
+  color: white;
+  text-decoration: none;
+}
+
+/* mobile responsiveness */
+
+@media screen and (max-width: 750px) {
+  header {
+    padding: 0
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .limit-buttons {
+    font-size: 10px;
+  }
 }

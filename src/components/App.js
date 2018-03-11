@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../stylesheets/App.css';
-import Navbar from '../components/Navbar'
-import Grid from '../components/Grid'
+import Navbar from './Navbar'
+import Footer from './Footer'
+import Grid from './Grid'
 import GiphyApi from "../api/GiphyApi"
-import CircularProgressGraphic from '../components/CircularProgressGraphic'
+import CircularProgressGraphic from './CircularProgressGraphic'
 
 class App extends Component {
   constructor(props) {
@@ -27,17 +28,19 @@ class App extends Component {
     this.changeLimit = this.changeLimit.bind(this);
   }
 
-  changeLimit(newLimit){
-    let settingsCopy = this.state.settings
-    settingsCopy.limit = newLimit
-    this.setState({
-      settings: settingsCopy
-    })
-    console.log(this.state.settings)
-    if (this.state.searched) {
-      this.fetchSearchResults(this.state.searchText)
-    }
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({
+      width: window.innerWidth
+    });
+  };
 
   fetchSearchResults(searchText){
     this.setState({
@@ -48,14 +51,12 @@ class App extends Component {
     GiphyApi.fetchSearchResults(this.state.settings.limit, this.state.rating, joinedSearchText)
     .then(response => {
       if (response.status === 200) {
-        console.log("success")
         this.setState({
           searched: true,
           searching: false,
           results: response.data.data
         })
       }
-      console.log(this.state.results)
     })
     .catch(err => console.log(err))
   }
@@ -68,20 +69,17 @@ class App extends Component {
     GiphyApi.fetchTrendingResults(this.state.settings.limit, this.state.rating)
     .then(response => {
       if (response.status === 200) {
-        console.log("success")
         this.setState({
           searched: true,
           searching: false,
           results: response.data.data
         })
       }
-      console.log(this.state.results)
     })
     .catch(err => console.log(err))
   }
 
   fetchRandomResult(){
-    console.log("random!")
     this.setState({
       searching: true,
       searchText: "random"
@@ -89,15 +87,12 @@ class App extends Component {
     GiphyApi.fetchRandomResult(this.state.rating)
     .then(response => {
       if (response.status === 200) {
-        console.log("success")
-        console.log(response)
         this.setState({
           searched: true,
           searching: false,
           results: [response.data.data]
         })
       }
-      console.log(this.state.results)
     })
     .catch(err => console.log(err))
   }
@@ -111,44 +106,44 @@ class App extends Component {
     })
   }
 
-  componentWillMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  handleWindowSizeChange = () => {
+  changeLimit(newLimit){
+    let settingsCopy = this.state.settings
+    settingsCopy.limit = newLimit
     this.setState({
-      width: window.innerWidth
-    });
-    console.log(this.state.width)
-  };
+      settings: settingsCopy
+    })
+    if (this.state.searched) {
+      this.fetchSearchResults(this.state.searchText)
+    }
+  }
 
   render() {
     let results = this.state.results.length
+    let limitClass = `limit-buttons _${this.state.settings.limit}`
     return (
       <div className="App">
-        <Navbar
-          fetchSearchResults={this.fetchSearchResults}
-          width={this.state.width}
-          fetchTrendingResults={this.fetchTrendingResults}
-          fetchRandomResult={this.fetchRandomResult}
-        />
-        <section className="results">
-          <h1>Giphy Search!</h1>
+        <header>
+          <Navbar
+            fetchSearchResults={this.fetchSearchResults}
+            width={this.state.width}
+            fetchTrendingResults={this.fetchTrendingResults}
+            fetchRandomResult={this.fetchRandomResult}
+          />
+        </header>
+        <main>
           {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
-          {!this.state.searched && <p>Search for your favorite GIFs...</p>}
+          {!this.state.searched && <h1>Giphy Search!</h1>}
+          {!this.state.searched && <h2>By Sloan Holzman</h2>}
+          {/* {!this.state.searched && <h2>Search for your favorite GIFs...</h2>} */}
           {this.state.searched &&
-            <div className="center">
-              <p className="search-results__explanation">Search results ({results}) for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></p>
+            <div>
+              <h3 className="search-results__explanation">Search results ({results}) for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></h3>
               <p className="italic">Click on any GIF for full size and details</p>
             </div>}
           {this.state.searched && <Grid width={this.state.width} results={this.state.results} reverseModal={this.reverseModal} modalOpen={this.state.modalOpen}/>}
-          <p className="limit-buttons">Results per search: <button onClick={() => this.changeLimit(5)}>5</button> / <button onClick={() => this.changeLimit(10)}>10</button> / <button onClick={() => this.changeLimit(25)}>25</button> / <button onClick={() => this.changeLimit(50)}>50</button></p>
-          </section>
-        </div>
+        </main>
+        <Footer limitClass={limitClass} changeLimit={this.changeLimit}/>
+      </div>
     );
   }
 }

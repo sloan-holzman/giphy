@@ -4,20 +4,6 @@ import muiTheme from './muiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Modal from './Modal'
 
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    width: '95%'
-  },
-  gridList: {
-    width: '100%',
-    height: '100%',
-    overflowY: 'auto',
-  },
-};
-
 class Grid extends Component {
   constructor(props) {
     super(props);
@@ -38,19 +24,17 @@ class Grid extends Component {
   render() {
     let columns = Math.round(this.props.width / 200)
     return (
-      <div style={styles.root}>
+      <div className="gridListSection">
         <MuiThemeProvider muiTheme={muiTheme}>
           <GridList
             cellHeight={"auto"}
-            style={styles.gridList}
             cols={columns}
+            className="gridList"
           >
             {this.props.results.map((tile) => (
               <GridTile
                 key={tile.id}
                 title={tile.title}
-                // subtitle={<span>by <b>{tile.author}</b></span>}
-                // actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
                 onClick={() => this.reverseModal(tile)}
               >
                 <img src={tile.images.original.url} alt={tile.title}/>

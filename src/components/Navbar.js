@@ -1,5 +1,5 @@
 import React from 'react'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import muiTheme from './muiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -18,7 +18,6 @@ const Navbar = ({...props}) => {
           <AutoCompleteFilters fetchSearchResults={props.fetchSearchResults} />
         </ToolbarGroup>
         <ToolbarGroup>
-          {/* {!isMobile && <ToolbarTitle text="Giphy Search!" />} */}
           <ToolbarSeparator />
           {isMobile ?
             <IconMenu
@@ -27,6 +26,7 @@ const Navbar = ({...props}) => {
                   <MoreVertIcon />
                 </IconButton>
               }
+              targetOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
               <MenuItem primaryText="Trending" onClick={props.fetchTrendingResults}/>
               <MenuItem primaryText="Random" onClick={props.fetchRandomResult}/>

@@ -25,7 +25,7 @@ export default class AutoCompleteControlled extends Component {
   };
 
   handleNewRequest = () => {
-    let recentSearches = this.state.recentSearches
+    let recentSearches = this.state.recentSearches.reverse()
     if (!recentSearches.find(item => item === this.state.searchText)) {
       recentSearches.push(this.state.searchText)
       this.setState({
@@ -40,7 +40,7 @@ export default class AutoCompleteControlled extends Component {
     return (
       <div className="autocomplete">
         <AutoComplete
-          hintText="search for GIFs"
+          hintText="Search for GIFs"
           searchText={this.state.searchText}
           onUpdateInput={this.handleUpdateInput}
           onNewRequest={this.handleNewRequest}
