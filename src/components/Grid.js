@@ -37,7 +37,7 @@ class Grid extends Component {
                 title={tile.title}
                 onClick={() => this.reverseModal(tile)}
               >
-                <img src={tile.images.original.url} alt={tile.title}/>
+                <img src={tile.images.downsized.url} alt={tile.title}/>
               </GridTile>
             ))}
           </GridList>

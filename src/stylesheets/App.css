@@ -59,6 +59,10 @@ main {
   padding-left: 2vw;
 }
 
+span.avoidwrap {
+  display: inline-block;
+}
+
 /* font sizes */
 
 h1 {

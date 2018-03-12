@@ -25,9 +25,9 @@ export default class AutoCompleteControlled extends Component {
   };
 
   handleNewRequest = () => {
-    let recentSearches = this.state.recentSearches.reverse()
+    let recentSearches = this.state.recentSearches
     if (!recentSearches.find(item => item === this.state.searchText)) {
-      recentSearches.push(this.state.searchText)
+      recentSearches.unshift(this.state.searchText)
       this.setState({
         recentSearches: recentSearches
       })

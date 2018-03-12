@@ -120,6 +120,14 @@ class App extends Component {
   render() {
     let results = this.state.results.length
     let limitClass = `limit-buttons _${this.state.settings.limit}`
+    let resultsPhrase
+    if (this.state.searchText === 'random') {
+      resultsPhrase = 'A random GIF!'
+    } else if (this.state.searchText === 'trending') {
+      resultsPhrase = `Trending search results (${results})`
+    } else {
+      resultsPhrase = `Search results (${results}) for '${this.state.searchText}'`
+    }
     return (
       <div className="App">
         <header>
@@ -136,7 +144,7 @@ class App extends Component {
           {this.state.searching && <CircularProgressGraphic size={80} thickness={5} />}
           {this.state.searched &&
             <div>
-              <h3 className="search-results__explanation">Search results ({results}) for '{this.state.searchText}'<button onClick={this.clearSearch}>[clear]</button></h3>
+              <h3 className="search-results__explanation">{resultsPhrase}<button onClick={this.clearSearch}>[clear]</button></h3>
               <p className="italic">Click on any GIF for full size and details</p>
             </div>}
           {this.state.searched && <Grid width={this.state.width} results={this.state.results} reverseModal={this.reverseModal} modalOpen={this.state.modalOpen}/>}
