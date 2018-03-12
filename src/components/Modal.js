@@ -24,7 +24,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
           modal={true}
           open={props.modalOpen}
         >
-          {props.gif.images && <img src={props.gif.images.original.url} alt={props.gif.title}/>}
+          {props.gif.images && <img src={props.gif.images.downsized.url} alt={props.gif.title}/>}
           <br/>
           <a className="link" href={props.gif.url} target="_blank" rel="noopener noreferrer">LINK</a>
         </Dialog>
